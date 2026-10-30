@@ -73,3 +73,5 @@
 @media(max-width:800px){.video-workspace-grid{grid-template-columns:1fr}.abc-column{max-height:none}.video-workspace .observation-player{max-height:none}}
 
 .abc-review{display:flex;align-items:flex-start;gap:10px;padding:10px;margin:12px 0;background:#123846;border:1px solid #7aa5a3;border-radius:9px}.abc-review input{width:20px;height:20px;flex:none;accent-color:#80d8b6}.abc-review label{font-size:13px;line-height:1.5;color:#e5f7f2}.abc-column>.secondary{margin:5px 0 9px}
+
+.abc-entry select{display:block;width:100%;margin-top:4px;padding:10px;background:#071a28;color:#fff;border:1px solid #639e9d;border-radius:8px;font:inherit;font-size:13px}
