@@ -15,7 +15,7 @@ function status(){const row=el("div",undefined,"status");const label=el("div",un
 function tracker(){const path=el("div",undefined,"room-track");ROOMS.forEach((r,i)=>{const node=el("div",undefined,"room-node"+(i<state.room?" complete":i===state.room?" active":""));node.append(el("span",i<state.room?"✓":r.icon),el("small","ROOM "+(i+1)));path.append(node)});return path}
 function render(){if(!state)return welcome();if(state.finished)return victory();base();app.append(status(),tracker());if(state.paused){const panel=el("section",undefined,"panel center");panel.append(el("div","⏸️","big-icon"),el("h1",state.remaining===0&&state.limit?"TIME'S UP!":"Mission paused"),el("p","Your progress is saved in this browser session."),btn("CONTINUE MISSION",()=>{state.paused=false;save();render();startClock()},"primary"));app.append(panel);return}
 if(state.room>=ROOMS.length)return finalDoor();
-if(state.sceneFinds===undefined)state.sceneFinds={};if(state.sceneOpen===undefined)state.sceneOpen=null;if(state.notes===undefined)state.notes={};if(state.room===1&&(state.setting||"school")==="school")return assessmentArchives();if(!state.sceneOpen)return explore();if(state.sceneOpen==="cabinet")return cabinetScene();if(state.sceneOpen==="case-file")return caseFile();if(state.sceneOpen==="video-lab")return videoLab();if(state.sceneOpen.startsWith("object-"))return inspect();
+if(state.sceneFinds===undefined)state.sceneFinds={};if(state.sceneOpen===undefined)state.sceneOpen=null;if(state.notes===undefined)state.notes={};if(state.room===1&&(state.setting||"school")==="school"){if(state.sceneOpen==="archive-board")return assessmentArchives();return archiveScene()}if(!state.sceneOpen)return explore();if(state.sceneOpen==="cabinet")return cabinetScene();if(state.sceneOpen==="case-file")return caseFile();if(state.sceneOpen==="video-lab")return videoLab();if(state.sceneOpen.startsWith("object-"))return inspect();
 const room=ROOMS[state.room],puzzle=room.puzzles[state.step],panel=el("section",undefined,"panel challenge");panel.append(btn("← EXPLORE ROOM",()=>{state.sceneOpen=null;state.feedback=null;save();render()},"secondary"));panel.append(el("div","SECURITY SECTOR "+(state.room+1)+" / 5 · TCO "+room.tco,"eyebrow"),el("div",room.icon,"big-icon"),el("h1",room.title),el("p",room.story,"story"),el("div","PUZZLE "+(state.step+1)+" OF "+room.puzzles.length,"puzzle-index"),el("h2",puzzle.prompt));const options=el("div",undefined,"choices");
 if(puzzle.type==="choice"){puzzle.options.forEach((o,i)=>options.append(btn(String.fromCharCode(65+i)+". "+o,()=>answer(i),"choice")))}else{const form=el("form",undefined,"number-form");const input=el("input");input.type="number";input.placeholder="Enter number";input.required=true;input.setAttribute("aria-label","Numerical answer");const submit=btn("SUBMIT",()=>{},"primary");submit.type="submit";form.onsubmit=e=>{e.preventDefault();answer(Number(input.value))};form.append(input,submit);options.append(form)}
 panel.append(options);const help=el("div",undefined,"help");const used=!!state.hintsUsed[state.room+"-"+state.step];help.append(btn(used?"💡 Hint shown":"💡 Request a hint",()=>{state.hintsUsed[state.room+"-"+state.step]=true;state.hints++;audio("hint");save();render()},"hint-btn"));if(used)help.append(el("p",puzzle.hint,"hint-text"));panel.append(help);if(state.feedback){const feedback=el("div",undefined,"feedback "+(state.feedback.ok?"correct":"incorrect"));feedback.append(el("strong",state.feedback.ok?"✓ Access verified!":"✕ Not quite. Try again."),el("p",state.feedback.text));if(state.feedback.ok)feedback.append(btn(state.step===room.puzzles.length-1?"UNLOCK ROOM →":"NEXT PUZZLE →",advance,"primary"));panel.append(feedback)}app.append(panel);app.append(el("p","All questions and explanations are original educational material. TCO domain alignment is broad and should be reviewed before formal exam use.","footnote"))}
@@ -29,8 +29,36 @@ const OBJECTS=[
 ];
 
 /* Nora school pathway: connected assessment room. Descriptive data are not a functional analysis. */
+function archiveScene(){
+const p=el("section",undefined,"panel exploration");p.append(el("div","SECTOR 02 · THE ASSESSMENT ARCHIVES","eyebrow"),el("h1","The Assessment Archives"),el("p","Investigate the archive. Search the shelves, open case materials, and find the evidence board. Not every object is useful.","story"));
+const scene=el("div",undefined,"nora-scene archives-scene");const bg=el("img");bg.src="./room-2-nora.png";bg.alt="Illustrated assessment archives with filing cabinets, bookshelves, evidence board, storage boxes, and a rolling table";bg.className="nora-background";scene.append(bg);
+const toast=el("div",undefined,"nora-toast");toast.setAttribute("role","status");scene.append(toast);
+const targets=[
+["Interviews drawer",19,33,9,13,"archive","Interview records: examine the evidence board to compare reports with direct observation."],
+["Assessment drawer",19,45,9,12,"archive","Assessment files may help identify what information is still missing."],
+["Teacher reports drawer",19,57,9,12,"archive","Teacher reports provide context, but cannot by themselves establish behavioral function."],
+["Nora evidence board",39,12,23,37,"archive","The case board contains your ABC observation records and assessment tools."],
+["Observation data box",82,25,16,12,"archive","Open your observation data to review the three behavior categories."],
+["Descriptive data box",48,73,14,13,"archive","The descriptive data are ready for analysis."],
+["Interview summaries box",63,72,14,14,"archive","Compare reports with direct observation."],
+["Clipboard on rolling cart",38,68,9,17,"archive","Your analyst decision file is ready."],
+["Pothos plant",13,17,12,20,"decoy","Another thriving pothos. The facilities team has achieved excellent plant-maintenance fidelity."],
+["Rolling ladder",29,45,10,37,"decoy","A rolling ladder. A high-effort response requirement for reaching the top shelf."],
+["Globe",23,0,12,13,"decoy","The globe suggests worldwide generalization. Unfortunately it contains no clue."],
+["Wall clock",63,10,8,13,"decoy","Time flies when you're analyzing ABC data."],
+["Reading chair",67,40,15,24,"decoy","This chair looks more comfortable than the last one. An environmental improvement!"],
+["Desk lamp",84,32,9,18,"decoy","Excellent lighting. No functional relation to the mystery established."],
+["School records box",82,13,16,13,"decoy","An entire box of school records. Not every document is relevant to Nora's case."],
+["Research articles box",84,81,14,16,"decoy","Research articles! A tempting distraction from the current assessment."],
+["Backpack",0,67,10,27,"decoy","A forgotten backpack. Please don't conduct an unauthorized search."],
+["Window",70,3,13,36,"decoy","A lovely view. The archives staff must value natural light."],
+["Desk plant",50,55,10,22,"decoy","This plant has been watered. Unlike the archive printer, it appears to be functioning."],
+["Good Data poster",16,17,9,18,"decoy","Good data, better decisions. Finally, some sensible wall art."]
+];
+targets.forEach(([label,x,y,w,h,type,message])=>{const b=btn("",()=>{audio("click");if(type==="archive"){state.sceneOpen="archive-board";save();render()}else{toast.textContent=message;toast.classList.add("visible")}},"nora-hit");b.style.left=x+"%";b.style.top=y+"%";b.style.width=w+"%";b.style.height=h+"%";b.title="";b.setAttribute("aria-label","Inspect "+label);scene.append(b)});
+p.append(scene,el("p","Click objects to inspect them. Some reveal case evidence; others are just wonderfully ordinary office supplies.","scene-instruction"));app.append(p)}
 function assessmentArchives(){
-const p=el("section",undefined,"panel archives");p.append(el("div","SECTOR 02 · CASE INVESTIGATION","eyebrow"),el("h1","The Assessment Archives"),el("p","The observation has been recovered. Investigate the evidence, compare behavioral patterns, and decide what can reasonably be concluded before the archive releases its security digit.","story"));
+const p=el("section",undefined,"panel archives");p.append(btn("← RETURN TO ARCHIVES",()=>{state.sceneOpen=null;save();render()},"secondary"),el("div","SECTOR 02 · CASE INVESTIGATION","eyebrow"),el("h1","The Assessment Archives"),el("p","The observation has been recovered. Investigate the evidence, compare behavioral patterns, and decide what can reasonably be concluded before the archive releases its security digit.","story"));
 const raw=state.notes?.["video-school"]?.abc||[],entries=raw.filter(x=>x&&x.category);
 const names={out_of_seat:"Out of seat",verbal_protest:"Loud verbal protest",property_destruction:"Property destruction"};
 const counts={out_of_seat:0,verbal_protest:0,property_destruction:0};entries.forEach(x=>{if(Object.hasOwn(counts,x.category))counts[x.category]++});
