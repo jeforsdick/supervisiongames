@@ -41,3 +41,18 @@ main{position:relative;z-index:1}
 @keyframes spotlight{from{text-shadow:0 0 8px #f8d78055}to{text-shadow:0 0 25px #f8d780cc}}
 @media(max-width:700px){.host-header{padding:12px}.host-logo{max-height:115px}.scores .team{min-width:110px}.board>div{min-height:58px;font-size:9px;padding:3px}.board button{min-height:60px;font-size:17px;padding:3px}.host-clue{min-height:380px}.host-clue .daily-art{max-height:190px}}
 @media(prefers-reduced-motion:reduce){.buzz-banner,.host-clue .daily-art,.answer-reveal{animation:none!important}}
+
+/* Live game-show transitions and audio controls */
+.show-audio-controls{display:flex;gap:9px;align-items:center;justify-content:flex-end;flex-wrap:wrap;font-size:13px}
+.show-audio-controls button{padding:8px 12px;border-radius:40px;border:1px solid #e7c57c;background:#1d337b}
+.show-audio-controls label{display:flex;align-items:center;gap:8px;color:#f7e4b7}
+.show-audio-controls input{width:95px;accent-color:#f6d17c}
+.stage-enter{animation:stageRise .42s cubic-bezier(.2,.7,.2,1) both}
+.buzzer-winner{border-color:#ffefb2!important;background:linear-gradient(140deg,#2e53b8,#172c75)!important;animation:scoreSpotlight 1.05s ease-in-out infinite alternate}
+.host-clue .answer-reveal{animation:revealFlash .48s ease-out both}
+.host-clue button.gold{box-shadow:0 4px 16px #d8b45555}
+.board button:not(:disabled):hover{transform:translateY(-3px) scale(1.025);border-color:#ffde8b;box-shadow:0 0 20px #ffd57777}
+@keyframes stageRise{from{opacity:0;transform:translateY(13px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes scoreSpotlight{from{box-shadow:0 0 10px #f6d77a55}to{box-shadow:0 0 27px #ffe5a9aa}}
+@keyframes revealFlash{from{opacity:.15;transform:scale(.97);filter:brightness(1.6)}to{opacity:1;transform:scale(1);filter:brightness(1)}}
+@media(prefers-reduced-motion:reduce){.stage-enter,.buzzer-winner,.host-clue .answer-reveal{animation:none!important}.board button{transition:none!important}}
