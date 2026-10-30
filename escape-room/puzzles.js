@@ -36,11 +36,17 @@ const ESCAPE_CONTENT={
           "hint": "Partial-interval recording tells you whether a behavior occurred at any point in each interval."
         },
         {
-          "type": "number",
-          "prompt": "Two observers agree in 18 of 20 intervals. Enter their interval-by-interval agreement percentage.",
-          "answer": 90,
-          "explain": "18 ÷ 20 × 100 = 90%.",
-          "hint": "Divide agreements by total intervals, then multiply by 100."
+          "type": "choice",
+          "prompt": "Nora's observation report shows out-of-seat episodes during independent work. Which conclusion is most defensible from this observation alone?",
+          "options": [
+            "Nora's behavior is definitely maintained by escape",
+            "Nora's behavior is definitely maintained by attention",
+            "The observation documents when behavior occurred, but does not establish its function",
+            "The behavior should immediately be placed on extinction"
+          ],
+          "answer": 2,
+          "explain": "Descriptive observation can identify patterns and generate hypotheses, but it does not experimentally demonstrate behavioral function. The team should integrate other assessment information before selecting a function-based intervention.",
+          "hint": "Ask whether watching behavior is enough to establish the maintaining contingency."
         }
       ],
       "digit": "7"
