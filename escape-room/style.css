@@ -51,3 +51,19 @@
 
 /* Canva observation room: invisible hotspots over real illustrated props */
 .nora-scene{position:relative;width:100%;aspect-ratio:16/9;border:2px solid #b2aa7a;border-radius:15px;overflow:hidden;background:#142a35;box-shadow:0 14px 40px #0009}.nora-background{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}.nora-hit{position:absolute;z-index:3;border:0!important;border-radius:5px;background:transparent!important;padding:0;cursor:zoom-in;box-shadow:none!important;transform:none!important}.nora-hit:hover{outline:2px solid #f5db85aa;outline-offset:-3px;background:#e6c77a15!important}.nora-hit:focus-visible{outline:3px solid #fff5a3!important;background:#e6c77a22!important}.nora-toast{position:absolute;z-index:6;bottom:3%;left:8%;right:8%;background:#091a27ed;border:1px solid #e5c781;border-radius:12px;padding:13px 20px;color:#fff5d9;font-weight:700;line-height:1.5;box-shadow:0 8px 30px #000b;opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .2s,transform .2s}.nora-toast.visible{opacity:1;transform:translateY(0)}.nora-scene.asset-missing{min-height:280px;background:linear-gradient(145deg,#193a4b,#081623)}.nora-scene.asset-missing:before{content:"Upload the Nora room assets to escape-room/assets/nora/";position:absolute;left:5%;top:12%;color:#ffe0a0;font-weight:800;font-size:clamp(14px,2vw,22px)}
+
+/* Filing cabinet: discoverable physical drawers and collectible paper evidence */
+.cabinet-inspection,.case-file-panel{max-width:900px;text-align:center}
+.cabinet-inspection h1,.case-file-panel h1{color:#f4d58e}
+.cabinet-stage{margin:20px auto;max-width:490px;min-height:390px;padding:22px;display:grid;place-items:center;border-radius:22px;background:radial-gradient(ellipse at center,#315267,#0a1b2a 75%);border:1px solid #477e85;box-shadow:inset 0 0 50px #0007}
+.cabinet-illustration{width:min(100%,290px);padding:18px 20px 26px;background:linear-gradient(105deg,#2e5b5d,#19383c 65%,#10292e);border:5px solid #638e85;border-radius:10px 10px 18px 18px;box-shadow:inset 12px 0 20px #ffffff12,inset -12px 0 20px #0008,16px 18px 35px #0009}
+.cabinet-drawer{width:100%;height:95px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;margin:8px 0;padding:8px;border:3px solid #7e9c90;border-radius:5px;background:linear-gradient(160deg,#365e60,#19373d)!important;color:#e6f2e6;box-shadow:0 7px 7px #0009,inset 0 2px 5px #a9d4bb44;transition:transform .35s ease,box-shadow .35s ease}
+.cabinet-drawer:hover{transform:translateY(-2px)}
+.cabinet-drawer.opened{transform:translateY(12px) scale(1.035);background:linear-gradient(180deg,#07151a,#315d60)!important;box-shadow:0 -14px 0 #07151b,0 15px 22px #000b}
+.drawer-handle{font-size:24px;color:#dfc789;line-height:1}.drawer-label{font-size:12px;text-transform:uppercase;letter-spacing:.12em}
+.drawer-contents{max-width:650px;margin:20px auto;border:2px solid #d5bb79;border-radius:16px;padding:20px;background:#15323e;animation:drawerFind .35s ease-out}
+.drawer-contents h2{color:#f5d992}.drawer-contents p{line-height:1.6}
+.case-paper{max-width:660px;margin:22px auto;padding:clamp(20px,5vw,48px);background:#f0e9d4;color:#26323c;text-align:left;border-radius:3px;box-shadow:6px 9px 0 #c3b69c,12px 18px 35px #0008;transform:rotate(-.7deg)}
+.case-paper h1{color:#283744;font-size:clamp(25px,3.5vw,38px);line-height:1.15}.case-paper h2{font-size:19px;color:#304b50;margin-top:25px}.case-paper p{line-height:1.7}.paper-kicker{letter-spacing:.15em;color:#64706b;font-weight:900;font-size:11px;border-bottom:2px solid #b1aaa0;padding-bottom:13px}.paper-note{border:1px dashed #899a8f;background:#e1dfca;padding:14px;margin-top:25px;font-size:13px;font-weight:700}
+@keyframes drawerFind{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.cabinet-drawer,.drawer-contents{transition:none!important;animation:none!important}}
