@@ -11,3 +11,33 @@ main{position:relative;z-index:1}
 .tile{border-color:#a98e58;box-shadow:inset 0 0 18px #3555d950}
 .panel{backdrop-filter:blur(7px);background:#101b55e8}
 @media(max-width:700px){body{background-attachment:scroll;background-position:center top}.jeopardy-logo{max-height:155px}.board-logo{max-height:110px}.daily-art{max-height:210px}}
+
+/* Multiplayer game-show art direction */
+.host-header{padding:16px 22px 20px;margin:12px auto 18px;background:linear-gradient(145deg,#0d194edb,#1b2c76d9);border-color:#f1d27c}
+.host-logo{width:min(100%,350px);max-height:160px;margin:0 auto 4px}
+.host-header h2{font-size:clamp(16px,2vw,24px);margin:5px auto 14px;color:#f9d989;letter-spacing:.07em}
+.host-header .scores{margin:10px 0 0}
+.scores .team{background:linear-gradient(150deg,#2443a1,#10205d);border:2px solid #d6b86b;box-shadow:inset 0 0 20px #5679f433,0 8px 22px #0006;min-width:160px}
+.scores .team strong{font-size:clamp(25px,3vw,40px);text-shadow:0 0 15px #ffde8070}
+.lobby-stage{max-width:850px}
+.lobby-stage h2{font-size:clamp(32px,5vw,58px);color:#ffe19b}
+.lobby-stage p{overflow-wrap:anywhere}
+.host-clue{background:linear-gradient(145deg,#0c1645f5,#15276bf1);border:3px solid #e4c16b;min-height:470px}
+.host-clue>div:first-child{font-weight:800;color:#f6d684;text-transform:uppercase;letter-spacing:.12em}
+.host-clue>h2{font-size:clamp(27px,3.6vw,49px);line-height:1.25;max-width:880px;margin:15px auto}
+.host-clue .daily-art{width:min(100%,650px);max-height:290px;object-fit:contain;animation:dailyReveal .6s ease-out}
+.host-clue .scoring{margin-top:24px}
+.host-clue .scoring button{font-weight:750;padding:15px 22px;box-shadow:0 4px 18px #0005}
+.buzz-banner{color:#fbe095!important;animation:spotlight 1.5s ease-in-out infinite alternate}
+.answer-reveal{border:2px solid #e8c67c;background:linear-gradient(130deg,#263e8b,#15225b);padding:22px;border-radius:18px;max-width:850px;margin:20px auto;animation:dailyReveal .4s ease-out}
+.answer-reveal span{font-size:13px;letter-spacing:.16em;color:#fbe09c;font-weight:800}
+.answer-reveal h2{font-size:clamp(24px,3vw,38px);color:#fff;margin:12px 0}
+.answer-reveal p{color:#e1eaff}
+.final-stage{border-color:#f4d784;box-shadow:0 0 35px #e2b85b55,0 18px 70px #0007}
+.board>div{background:linear-gradient(135deg,#2847a3,#13266e);border:1px solid #c6a45d;display:grid;place-items:center;text-align:center;min-height:80px;font-weight:850;text-transform:uppercase;padding:8px}
+.board button{border-radius:4px;min-height:90px;font-size:clamp(19px,2.5vw,34px);font-weight:900;color:#ffdc7e;text-shadow:0 2px 8px #000b;background:linear-gradient(150deg,#2041aa,#102377);box-shadow:inset 0 0 18px #426bf955}
+.board button:disabled{color:transparent;opacity:.3}
+@keyframes dailyReveal{from{transform:scale(.93);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes spotlight{from{text-shadow:0 0 8px #f8d78055}to{text-shadow:0 0 25px #f8d780cc}}
+@media(max-width:700px){.host-header{padding:12px}.host-logo{max-height:115px}.scores .team{min-width:110px}.board>div{min-height:58px;font-size:9px;padding:3px}.board button{min-height:60px;font-size:17px;padding:3px}.host-clue{min-height:380px}.host-clue .daily-art{max-height:190px}}
+@media(prefers-reduced-motion:reduce){.buzz-banner,.host-clue .daily-art,.answer-reveal{animation:none!important}}
