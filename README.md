@@ -1,13 +1,24 @@
 # Supervision Games
 
-Original BCBA exam preparation games, starting with **Who Wants to Be a Behavior Analyst?**
+A public collection of original BCBA supervision study games. First game: **Who Wants to Be a Behavior Analyst?**
 
-Open `index.html` locally or deploy this static site using GitHub Pages or Vercel. No build step is needed.
+## Play
+Open `index.html` in your browser, or publish the repository using GitHub Pages or Vercel. This is a static application requiring no build step or credentials.
 
-The game includes solo and group supervision modes, a 15-question prize ladder, 50:50, simulated audience poll, supervisor hint, and answer explanations.
+## Features
+- Solo study and group supervision modes
+- 15-question rounds, virtual prize ladder, sounds, answer explanations
+- Three lifelines: 50:50, a generic supervisor hint, and a **simulated** audience poll
+- Domain selection across the nine BCBA 6th Edition Test Content Outline domains
+- Task codes for reviewing missed items
 
-**Editorial caveat:** The initial bank has 34 original concepts and 170 answer-order/presentation variants, **not** 170 distinct questions. The question bank needs further qualified BCBA editorial review before exam preparation use. No affiliation with BACB or the television program.
+## Question bank and limitations
+The current bank contains **38 independently authored concepts** with **190 answer-order variants**. These are *not* 190 independent exam questions, and some domains have fewer than 15 distinct concepts. Rounds may repeat concepts. Questions are a preliminary educational draft and should receive an independent qualified-BCBA accuracy and TCO-mapping review before formal exam preparation use. This game is not affiliated with the BACB, Pass the Big ABA Exam, or any television game show.
 
-Aligned to the BACB BCBA 6th Edition Test Content Outline: https://www.bacb.com/wp-content/bcba-outline-6thEd/
+Source: https://www.bacb.com/wp-content/bcba-outline-6thEd/
 
-Next: expand to at least 150 independently authored items and add further supervision games.
+## Next development milestones
+- At least 150 truly distinct, carefully reviewed questions
+- More task-level coverage and harder scenario-based items
+- Facilitator-controlled group reveal and scoring
+- Other games, including a Jeopardy-style review game
