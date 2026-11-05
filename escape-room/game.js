@@ -30,20 +30,22 @@ function devControls(){
   if(!DEV_MODE)return;
   const header=app.querySelector(".top");
   if(!header)return;
-  const selector=el("select");
-  selector.setAttribute("aria-label","Developer: jump to room");
-  ROOMS.forEach((room,i)=>{const option=el("option","Room "+(i+1)+": "+room.title);option.value=String(i);selector.append(option)});
-  selector.value=String(Math.min(state?.room||0,ROOMS.length-1));
-  const jump=btn("Jump to room",()=>devJump(Number(selector.value)));
-  const resetRoom=btn("Reset this room",()=>{
-    if(!state?.started||state.room>=ROOMS.length)return;
-    if(!confirm("Reset the current room for testing?"))return;
-    devJump(state.room);
-  });
   const controls=el("div",undefined,"dev-controls");
-  controls.style.cssText="display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:6px;border:1px dashed #f5d47b;border-radius:8px";
-  selector.style.maxWidth="220px";
-  controls.append(el("small","🛠 DEV"),selector,jump,resetRoom);
+  controls.style.cssText="display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:8px;border:1px dashed #f5d47b;border-radius:8px;width:100%";
+  controls.append(el("strong","🛠 TEST ROOMS"));
+  ROOMS.forEach((room,i)=>{
+    const b=btn("Room "+(i+1),()=>devJump(i));
+    b.title=room.title;
+    b.style.cssText="width:auto;display:inline-block;margin:0;padding:9px 12px";
+    if(state?.room===i)b.style.borderColor="#f5d47b";
+    controls.append(b);
+  });
+  const resetRoom=btn("Reset room",()=>{
+    if(!state?.started||state.room>=ROOMS.length)return;
+    if(confirm("Reset this room for testing?"))devJump(state.room);
+  });
+  resetRoom.style.cssText="width:auto;display:inline-block;margin:0;padding:9px 12px";
+  controls.append(resetRoom);
   header.append(controls);
 }
 function stopClock(){if(ticker){clearInterval(ticker);ticker=null}}
