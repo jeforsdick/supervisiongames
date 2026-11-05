@@ -6,7 +6,46 @@ function load(){try{let s=JSON.parse(sessionStorage.getItem(KEY));if(s&&typeof s
 function audio(kind){try{context=context||new(window.AudioContext||window.webkitAudioContext)();context.resume();const patterns={click:[440,660],correct:[392,523,659,784],wrong:[196,174],unlock:[261,392,523,784,1047],hint:[349,440,523],win:[261,329,392,523,659,784,1047]};(patterns[kind]||patterns.click).forEach((f,i)=>{const t=context.currentTime+i*.11,o=context.createOscillator(),g=context.createGain();o.type=i%2?"sine":"triangle";o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.09,t+.015);g.gain.exponentialRampToValueAtTime(.0001,t+.22);o.connect(g);g.connect(context.destination);o.start(t);o.stop(t+.24)})}catch(e){}}
 function el(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e}
 function btn(label,handler,cls=""){const b=el("button",label,cls);b.onclick=handler;return b}
-function base(){app.innerHTML='<header class="top"><a href="../">← Supervision Games</a><span>BCBA 6TH EDITION TCO · ORIGINAL STUDY CHALLENGES</span><button id="reset">New mission</button></header>';document.getElementById("reset").onclick=()=>{if(confirm("Start over and clear your current escape progress?")){state=null;sessionStorage.removeItem(KEY);stopClock();welcome()}}}
+function base(){app.innerHTML='<header class="top"><a href="../">← Supervision Games</a><span>BCBA 6TH EDITION TCO · ORIGINAL STUDY CHALLENGES</span><button id="reset">New mission</button></header>';document.getElementById("reset").onclick=()=>{if(confirm("Start over and clear your current escape progress?")){state=null;sessionStorage.removeItem(KEY);stopClock();welcome()}};devControls()}
+// Developer-only testing tools. Opt in with ?dev=1; never shown during normal play.
+const DEV_MODE=new URLSearchParams(location.search).get("dev")==="1";
+function devJump(roomIndex){
+  if(!Number.isInteger(roomIndex)||roomIndex<0||roomIndex>=ROOMS.length)return;
+  if(!state||!state.started){state=fresh();state.started=true;state.setting="school";state.videoCase=0;state.limit=0;state.remaining=0}
+  stopClock();
+  state.room=roomIndex;
+  state.step=0;
+  state.finished=false;
+  state.paused=false;
+  state.feedback=null;
+  state.sceneOpen=null;
+  state.sceneFinds={};
+  state.notes={};
+  state.cabinetFileCollected=false;
+  state.solved=ROOMS.slice(0,roomIndex).map((_,i)=>i);
+  state.digits=ROOMS.slice(0,roomIndex).map(r=>r.digit);
+  save();render();startClock();
+}
+function devControls(){
+  if(!DEV_MODE)return;
+  const header=app.querySelector(".top");
+  if(!header)return;
+  const selector=el("select");
+  selector.setAttribute("aria-label","Developer: jump to room");
+  ROOMS.forEach((room,i)=>{const option=el("option","Room "+(i+1)+": "+room.title);option.value=String(i);selector.append(option)});
+  selector.value=String(Math.min(state?.room||0,ROOMS.length-1));
+  const jump=btn("Jump to room",()=>devJump(Number(selector.value)));
+  const resetRoom=btn("Reset this room",()=>{
+    if(!state?.started||state.room>=ROOMS.length)return;
+    if(!confirm("Reset the current room for testing?"))return;
+    devJump(state.room);
+  });
+  const controls=el("div",undefined,"dev-controls");
+  controls.style.cssText="display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:6px;border:1px dashed #f5d47b;border-radius:8px";
+  selector.style.maxWidth="220px";
+  controls.append(el("small","🛠 DEV"),selector,jump,resetRoom);
+  header.append(controls);
+}
 function stopClock(){if(ticker){clearInterval(ticker);ticker=null}}
 function startClock(){stopClock();if(!state||!state.started||state.finished||state.paused||state.limit===0)return;state.startedAt=Date.now();ticker=setInterval(()=>{if(!state||state.paused||state.finished)return;state.remaining=Math.max(0,state.remaining-1);let timer=document.getElementById("clock");if(timer)timer.textContent=formatTime(state.remaining);if(state.remaining===0){state.paused=true;stopClock();save();render()}else if(state.remaining%10===0)save()},1000)}
 function formatTime(s){return Math.floor(s/60).toString().padStart(2,"0")+":"+(s%60).toString().padStart(2,"0")}
