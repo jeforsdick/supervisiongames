@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Who Wants to Be a Millionaire? | Granite Tier 2</title>
+  <link rel="stylesheet" href="../theme.css">
+  <style>
+    .timer{font-weight:900;color:#ffe08a;font-size:clamp(18px,3vw,28px);letter-spacing:.06em}
+    .timer.urgent{color:#ff9a9a;animation:pulse .6s ease-in-out infinite}
+    .millionaire-title{font-size:clamp(34px,6vw,66px);line-height:1.02;margin:12px auto 8px;color:#f5d47b;text-shadow:0 3px 18px #e0b34d70;max-width:900px}
+    .subtitle{color:#e5eaff;font-size:clamp(16px,2.2vw,21px);margin:0 auto 20px}
+    .rules{max-width:690px;margin:20px auto;text-align:left}
+    .rules strong{color:#f5d47b}
+    .ticket-map{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:18px 0}
+    .ticket-map span{padding:8px 12px;border:1px solid #6f82c4;border-radius:20px;background:#16265c}
+    .ticket-map b{color:#ffe08a}
+    .lifelines .helper{min-width:185px;max-width:240px;padding:12px 16px;border-radius:18px;line-height:1.15}
+    .lifelines .helper strong{display:block;color:#ffe08a;font-size:16px}
+    .lifelines .helper span{display:block;font-size:12px;color:#e3e8ff;margin-top:4px}
+    .session-best{font-size:14px;color:#d7defe}
+    .session-best b{color:#ffe08a}
+    .explanation{font-size:15px}
+    .result-tickets{font-size:clamp(52px,9vw,90px);font-weight:900;color:#ffdf82;text-shadow:0 0 20px #f5c55d77}
+    .new-team{margin-top:10px}
+    @media(max-width:650px){.lifelines .helper{min-width:0;width:100%}}
+  </style>
+</head>
+<body>
+  <main id="app"></main>
+  <script src="../sound.js"></script>
+  <script src="./questions.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
