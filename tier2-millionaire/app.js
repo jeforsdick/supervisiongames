@@ -24,11 +24,16 @@ function startClock(){
     if(left<=0){clearInterval(clock);timeUp();}
   },250);
 }
+function shuffleQuestion(q){
+  const pairs=q.options.map((text,i)=>({text,correct:i===q.answer}));
+  const mixed=shuffle(pairs);
+  return {...q,options:mixed.map(x=>x.text),answer:mixed.findIndex(x=>x.correct)};
+}
 function selectDeck(){
   const easy=shuffle(TIER2_QUESTIONS.filter(q=>q.difficulty==='easy')).slice(0,3);
   const medium=shuffle(TIER2_QUESTIONS.filter(q=>q.difficulty==='medium')).slice(0,3);
   const hard=shuffle(TIER2_QUESTIONS.filter(q=>q.difficulty==='hard')).slice(0,2);
-  return [...easy,...medium,...hard];
+  return [...easy,...medium,...hard].map(shuffleQuestion);
 }
 function newTeam(){
   session=blankSession();
